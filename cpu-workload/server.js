@@ -11,7 +11,7 @@ const PORT = 8000;
 console.log("Process ID", process.pid);
 const image = path.join(__dirname, "unsplash.jpg");
 
-app.get("/resize-images", async (_req, res) => {
+app.get("/resize-image", async (_req, res) => {
   try {
     const filename = path.join(__dirname, "outputs", `${uuidv4()}.jpg`);
     await sharp(image).resize(200, 200).toBuffer();
