@@ -14,7 +14,7 @@ const image = path.join(__dirname, "unsplash.jpg");
 app.get("/resize-image", async (_req, res) => {
   try {
     const filename = path.join(__dirname, "outputs", `${uuidv4()}.jpg`);
-    await sharp(image).resize(200, 200).toBuffer();
+    const data = await sharp(image).resize(200, 200).toBuffer();
     await fs.writeFile(filename, data);
     res.status(200).json({
       message: `Saved file to ${filename}`,
