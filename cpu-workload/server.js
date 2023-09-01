@@ -12,17 +12,16 @@ console.log("Process ID", process.pid);
 const image = path.join(__dirname, "unsplash.jpg");
 
 app.get("/resize-images", async (_req, res) => {
-  const filename = path.join(__dirname, "outputs", `${uuidv4()}.jpg`);
-
-  sharp(image)
-    .resize(200, 200)
-    .toBuffer()
-    .then(async (data) => {
-      await fs.writeFile(filename, data);
-      res.status(200).json({
-        message: `Saved file to ${filename}`,
-      });
+  try {
+    const filename = path.join(__dirname, "outputs", `${uuidv4()}.jpg`);
+    await sharp(image).resize(200, 200).toBuffer();
+    await fs.writeFile(filename, data);
+    res.status(200).json({
+      message: `Saved file to ${filename}`,
     });
+  } catch (e) {
+    res.status(500).json({ e });
+  }
 });
 
 app.listen(PORT, () => {
